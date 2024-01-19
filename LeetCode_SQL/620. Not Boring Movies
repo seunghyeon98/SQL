@@ -1,0 +1,8 @@
+# Write your MySQL query statement below
+
+# 홀수번의 id를 추출, description <> 'boring'
+
+select * 
+from Cinema
+where id % 2 <> 0 and description <> 'boring'
+order by rating desc;
