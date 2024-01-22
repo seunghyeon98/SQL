@@ -1,0 +1,8 @@
+# Write your MySQL query statement below
+
+# 적어도 학생수가 5명 인 모든 반을 구해라
+
+select class
+from courses
+group by class
+having count(student) >=5;

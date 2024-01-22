@@ -1,0 +1,11 @@
+# Write your MySQL query statement below
+
+# 좌표가 삼각형 형태인지 출력해라
+# 2개의 좌표의 합이, 하나의 좌표보다 크면 삼각형태이다.
+
+
+
+select *,
+case when x+y>z and x+z>y and y+z>x then 'Yes'
+Else 'No' END as triangle
+from triangle;

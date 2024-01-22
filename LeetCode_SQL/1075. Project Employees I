@@ -1,0 +1,9 @@
+# Write your MySQL query statement below
+
+# 각 프로젝트에 대한 모든 임직원들의 평균 years를 구해라
+
+select p.project_id, ROUND(AVG(e.experience_years),2) as "average_years"
+from project as p
+left join Employee  as e
+on p.employee_id = e.employee_id
+group by p.project_id
