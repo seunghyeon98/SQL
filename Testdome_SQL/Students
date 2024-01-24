@@ -1,0 +1,7 @@
+-- Write only the SQL statement that solves the problem and nothing else
+
+-- 성이 John인 학생의 수를 구해라
+
+select count(id)
+from students
+where firstName = 'John'

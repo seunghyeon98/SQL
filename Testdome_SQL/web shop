@@ -1,0 +1,10 @@
+-- Write only the SQL statement that solves the problem and nothing else
+
+-- 판매자의 평점이 4초과인 각 항목에 대한,아이템 이름과 판매자의 이름을 추출해라.
+
+
+
+select i.name as Item, s.name as Seller
+from items as i
+inner join sellers as s
+on i.sellerid = s.id and s.rating > 4;

@@ -1,0 +1,7 @@
+-- Write only the SQL statement that solves the problem and nothing else
+
+-- id가 20~100사이인 데이터의 year를 2015로 업데이트해라
+
+update enrollments
+set year = 2015
+where id between 20 and 100

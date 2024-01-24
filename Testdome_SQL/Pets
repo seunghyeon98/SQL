@@ -1,0 +1,9 @@
+-- Write only the SQL statement that solves the problem and nothing else
+-- pet이름의 고윳값을 추출
+
+select distinct(name)
+from dogs
+union
+select distinct (name)
+from cats
+
