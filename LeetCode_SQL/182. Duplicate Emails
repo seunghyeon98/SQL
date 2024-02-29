@@ -1,0 +1,8 @@
+# Write your MySQL query statement below
+
+# 중복 이메일을 찾아라
+select email as 'Email'
+from Person
+group by email
+having count(email) >= 2;
+

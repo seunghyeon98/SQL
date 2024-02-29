@@ -1,0 +1,9 @@
+# Write your MySQL query statement below
+
+# 주문한적 없는 소비자를 찾아라
+# -> customer <- orders, 에서 name이 null인경우
+
+select c.name as "Customers"
+from Customers  as c left join
+Orders as o on c.id = o.customerId
+where o.customerId is Null;
