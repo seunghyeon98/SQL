@@ -1,0 +1,93 @@
+# Write your MySQL query statement below
+
+-- U.
+-- -   confirmation rate는 요청된 통과 문자의 전체 수를 나눈 메시지의 수이다.
+-- -   어떠한 요청 받지 안은 사용자의 확인률은 0이다.
+-- -   confirmation rate를 소수점 2번째 자리에서 올림해라.
+
+-- -   confirmations 테이블에서 confirmation_rate를 구해서, Signups 테이블에 삽입하기.
+-- -   confirmations_rate의 값은 각 유저의 전체 action의 갯수중 actions='confirmed' 된 값
+
+-- L.
+-- -   confirmations 테이블에서 rate구하기
+--     action = 'confirmed' / total action
+--     -> 각 유저별 confirmed의 갯수
+
+
+-- select s.user_id, cr.confirmation_rate 
+-- from Signups as s
+-- left join
+-- (
+-- select user_id, (select count(*) from Confirmations  group by user_id having action='confirmed') / count(user_id) as 'confirmation_rate'
+-- from Confirmations
+-- group by user_id
+-- ) as cr
+-- on s.user_id = cr.user_id
+
+
+# Write your MySQL query statement below
+-- select s.user_id, round(avg(if(c.action="confirmed",1,0)),2) as confirmation_rate
+-- from Signups as s left join Confirmations as c on s.user_id= c.user_id group by user_id;
+
+
+
+
+
+-- select s.user_id, ifnull(cr_table.confirmation_rate,0) as 'confirmation_rate'
+-- from Signups as s 
+-- left join
+--     (select t1.user_id, ifnull(round(t2.confirmed_count / t1.total_action,2),0) as 'confirmation_rate'
+--     from 
+--         (select user_id, count(user_id) as 'total_action'
+--         from confirmations
+--         group by user_id) as t1 
+--     left join (
+--     select user_id, count(user_id) as 'confirmed_count'
+--     from confirmations
+--     where action = 'confirmed'
+--     group by user_id
+--     ) as t2
+--     on t1.user_id = t2.user_id
+--     ) as cr_table on s.user_id = cr_table.user_id;
+
+-- with cte_table as (
+--     select t1.user_id, round(confirmed_count/total_count,2) as 'confirmation_rate'
+--     (
+--         select user_id, count(user_id) as 'total_count'
+--         from confirmations
+--         group by user_id
+--     ) as t1 
+--     left join
+--     (
+--         select user_id,count(user_id) as 'confirmed_count'
+--         from confirmations
+--         where action = 'confirmed'
+--         group by user_id
+--     ) as t2
+--     on t1.user_id = t2.user_id
+-- )
+
+with t1 as (
+    select user_id, count(user_id) as total_count
+    from confirmations
+    group by user_id
+),
+t2 as (
+    select user_id, count(user_id) as confirmed_count
+    from confirmations
+    where action = 'confirmed'
+    group by user_id
+)
+
+select s.user_id, ifnull(cr_t.confirmation_rate,0) as confirmation_rate
+from Signups as s 
+left join 
+    (select t1.user_id, round(coalesce(confirmed_count,0)/total_count,2) as confirmation_rate
+from t1 left join t2 on t1.user_id = t2.user_id ) as cr_t
+on s.user_id = cr_t.user_id
+####################################################
+SELECT s.user_id, 
+       ROUND(COALESCE(t2.confirmed_count, 0) / t1.total_count, 2) AS confirmation_rate
+FROM Signups AS s 
+LEFT JOIN t1 ON s.user_id = t1.user_id
+LEFT JOIN t2 ON t1.user_id = t2.user_id;

@@ -1,0 +1,17 @@
+# Write your MySQL query statement below
+
+
+-- U.
+-- -   최소 5개를 보고한 매니저
+-- -   managerId의 Count가 5회 이상인 id의 name을 출력해라.
+
+-- L.
+-- -   managerId가 5회 이상인 id 찾기
+-- -   그 id에 해당하는 id의 name찾기
+
+select name
+from Employee
+where id in (select managerId 
+from Employee
+group by managerId 
+having count(managerId) >= 5 );

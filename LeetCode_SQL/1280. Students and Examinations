@@ -1,0 +1,27 @@
+# Write your MySQL query statement below
+-- '''
+-- U.
+-- -   각 시험에 참석한 학생의 수를 구해라.
+-- -   학생아이디와 과목이름을 기준으로 정렬
+
+-- L.
+-- -   Students 테이블에 Subjects테이블을 결합하여 학생X과목의 빈테이블을 만든다.
+-- -   빈테이블에 Examinations테이블을 결합하여, 각 학생이 참석한 시험정보를 삽입한다.
+-- -   정렬한다.
+
+-- '''
+
+
+
+
+select s.student_id, s.student_name, sb.subject_name, count(e.student_id) as 'attended_exams'
+from Students  as s
+cross join Subjects  as sb
+left join Examinations  as e
+on s.student_id = e.student_id and sb.subject_name = e.subject_name
+group by s.student_id, s.student_name, sb.subject_name
+order by s.student_id, sb.subject_name;
+
+
+
+
