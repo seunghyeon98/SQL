@@ -1,0 +1,23 @@
+# Write your MySQL query statement below
+
+-- 모든 고객들에 대한 첫번째 주문에서의 즉시 주문에 대한 퍼센테이지를 구해라
+-- 첫 주문에 대한 immediate_percentage 구하기, 
+    -- first order, count(order_date == customer_pref_delivery_date) / count(customer_id)
+
+-- 첫번째 주문에 대한 것으로 다루기 위해 order_date로 오름차순 정렬하기
+
+-- SELECT
+--     ROUND(AVG(ORDER_DATE = CUSTOMER_PREF_DELIVERY_DATE) * 100, 2) AS IMMEDIATE_PERCENTAGE
+
+
+with first_order_tb as (
+    select *
+    from Delivery
+    where (customer_id, order_date) in (select customer_id, min(order_date)
+                        from Delivery
+                        group by customer_id)
+)
+
+select round(avg(order_date = customer_pref_delivery_date)*100,2) as immediate_percentage
+-- SELECT round(sum(if(order_date=customer_pref_delivery_date,1,0)) / count(customer_id) * 100,2) as 'immediate_percentage'
+from first_order_tb

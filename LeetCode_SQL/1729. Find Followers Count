@@ -1,0 +1,7 @@
+# Write your MySQL query statement below
+
+-- 각 유저에 대한 팔로워수를 구해라
+-- user_id로 정렬
+
+select distinct(user_id), count(follower_id) Over(partition by user_id) as followers_count
+from Followers

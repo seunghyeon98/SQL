@@ -1,0 +1,16 @@
+# Write your MySQL query statement below
+
+-- 가장큰 싱글 숫자를 구해라, 싱글 숫자가 나오지 않는다면 null을 반환
+# 각 숫자별 중복 갯수를 구하고, 중복 갯수 칼럼의 값이 1인 숫자중에서 가장 . 큰수를 추출한다.
+
+
+select max(num) as num
+from (select num
+        from mynumbers
+        group by num
+        having count(num)=1) X
+
+-- (select num, count(num) as counted_num
+-- from MyNumbers
+-- group by num) as t1
+-- where t1.counted_num = 1
