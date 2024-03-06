@@ -1,0 +1,29 @@
+-- # Write your MySQL query statement below
+
+-- -- 영화에 가장 많이 평가한 사용자를 출력해라
+-- -- 별점이 동점인 경우 사용자의 이름을 기준으로 정렬
+
+-- --     다니엘과 모니카는 영화 3개에별점을 매김, 다니엘이 어순적으로 먼저나옴
+
+-- -- 2020 2월에 가장높은 평균별점의 영화이름을 출력할.
+-- -- 별점이 동점인 경우 영화이름을 기준으로 정렬
+
+
+
+
+
+# Write your MySQL query statement below
+(SELECT name AS results
+FROM MovieRating JOIN Users USING(user_id)
+GROUP BY user_id
+ORDER BY COUNT(*) DESC, name
+LIMIT 1)
+
+UNION ALL
+
+(SELECT title AS results
+FROM MovieRating JOIN Movies USING(movie_id)
+WHERE EXTRACT(YEAR_MONTH FROM created_at) = 202002
+GROUP BY title
+ORDER BY AVG(rating) DESC, title
+LIMIT 1);
