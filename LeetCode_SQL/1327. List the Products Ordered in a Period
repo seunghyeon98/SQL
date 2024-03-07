@@ -1,0 +1,18 @@
+# Write your MySQL query statement below
+
+-- 기간동안 상품 정렬된 리스트
+-- 2020년 2월에 적어도 100개의 유닛을 주문한 상품의 이르믈 작성해라.
+
+-- -   where, 2020년 2월을 기준으로 필터링해서, 
+-- -   group by product_id, having count(unit)>= 100
+
+
+select product_name, filltered_tb.stacked_unit as unit
+from (
+    select product_id, sum(unit) as stacked_unit
+    from Orders
+    where DATE_FORMAT(order_date,'%Y-%m') = '2020-02'
+    group by product_id
+    having sum(unit) >= 100 
+    ) as filltered_tb left join 
+Products as p using(product_id)
