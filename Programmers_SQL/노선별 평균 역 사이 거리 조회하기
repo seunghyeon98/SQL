@@ -1,0 +1,16 @@
+; -- 코드를 작성해주세요
+# 노선별로 노선
+# 총 누계 거리 (2번째 자리 반올림) -> 테이블에 존재하는, 역 사이 거리의 총합
+    ; -> round(n,1) : 2번째 자리에서 반올림 한다고 하면 매개변수에는 -1 의 수가 들어가야한다.
+# 평균 역 사이 거리 (3번째 자리 반올림 + km) -> avg(D_between_dist)
+# 를 노선 별로 조회(route)
+
+# 정렬: 총 누계 거리, 내림차순
+
+
+select ROUTE, 
+concat(convert(round(sum(D_BETWEEN_DIST),1),char ), 'km') as TOTAL_DISTANCE, # 반올림할 자릿수 주의
+concat(convert(round(avg(D_BETWEEN_DIST),2), char ), 'km') as AVERAGE_DISTANCE 
+from subway_distance
+group by route
+order by ROUND(SUM(D_BETWEEN_DIST), 1) DESC;

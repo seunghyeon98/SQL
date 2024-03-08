@@ -1,0 +1,15 @@
+-- 월급이 30000 미만이고,  매니저가 떠난 사람의 employee_id를 찾아라.
+
+-- -   월급이 30000 미만인 employee_id를 찾기,
+-- -   employee_id에 해당하는 manager_id가 Employees테이블의 employee_id에 없으면, 
+--     해당하는 employee_id를 출력하기
+-- -> 1. manager_id가 떠난 것 중에서, 30000미만인 것을 찾기.
+
+
+# Write your MySQL query statement below
+select employee_id
+from employees
+where salary < 30000
+    and manager_id not in(select employee_id from Employees)
+    # manager_id가 Emp테이블의 employee_id에 들어있지 않은것
+order by employee_id;
