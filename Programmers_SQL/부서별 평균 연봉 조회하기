@@ -1,0 +1,38 @@
+-- 코드를 작성해주세요
+
+# 부서별 평균 연봉을 조회해라.
+
+# 부서id
+# 영문 부서명
+# 평균연봉, 수수점 첫째 자리반올림 as AVG_SAL
+# oreder by avg_sal desc
+
+# 부서별, 평균연봉 구하기.
+
+# select
+#     d.dept_id as DEPT_ID, d.dept_name_en as DEPT_NAME_EN,
+#     e.AVG_SAL as AVG_SAL
+# from  
+#     HR_DEPARTMENT d
+# left join 
+#     (
+#     select
+#         dept_id, round(avg(sal),0) as AVG_SAL
+#     from
+#         HR_EMPLOYEES
+#     group by
+#         dept_id
+#     ) e using (dept_id)
+# # where d.dept_id  is not null
+# order by AVG_SAL desc;
+
+
+    
+select 
+    e.DEPT_ID,
+    d.DEPT_NAME_EN,
+    round(avg(e.sal),0) as AVG_SAL
+from  HR_EMPLOYEES e left join HR_DEPARTMENT d 
+using (dept_id)
+group by e.dept_id
+order by AVG_SAL desc;
