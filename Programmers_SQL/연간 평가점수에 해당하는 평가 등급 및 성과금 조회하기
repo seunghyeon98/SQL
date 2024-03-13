@@ -1,0 +1,39 @@
+
+# 성과금(보너스) : 연봉 * 성과금% 정도
+# hr_grade테이블에서 사원별 평균값을 가진 테이블로 만들기
+
+with cte_t as (
+    SELECT
+        e.EMP_NO,
+        avg(g.score) as avg_score,
+        case 
+            when  avg(g.score) >= 96 then 'S'
+            when  avg(g.score) >= 90 then 'A'
+            when  avg(g.score) >= 80 then 'B'
+            else 'C' end as 'GRADE',
+        case 
+            when  avg(g.score) >= 96 then 0.2
+            when  avg(g.score) >= 90 then 0.15
+            when  avg(g.score) >= 80 then 0.1
+            else 0 end as 'bonus_per',
+        avg(e.sal) as avg_sal
+    FROM
+        hr_grade as g
+    LEFT JOIN
+        hr_employees as e using(emp_no)
+    group by 
+        EMP_NO  
+)
+select 
+    e.EMP_NO,
+    e.EMP_NAME,
+    c.GRADE,
+    (c.avg_sal * c.bonus_per) as 'BONUS'
+from 
+    HR_EMPLOYEES as e left join
+    cte_t as c using(emp_no)
+order by e.emp_no asc;
+
+
+
+    
