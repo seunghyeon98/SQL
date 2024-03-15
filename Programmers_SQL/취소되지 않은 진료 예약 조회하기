@@ -1,0 +1,41 @@
+-- 코드를 입력하세요
+
+# 2022년4월13일 취소되지 않은 흉부외과(CS) 진료 예약 내역을 조회하는 sql문을 작성해라.
+# 진료예약번호
+# 환자이름
+# 환자번호
+# 진료과코드
+# 의사이름
+# 진료예약일시
+# order by 진료예약일시 asc
+
+
+with cte as (
+    select 
+        APNT_NO,
+        PT_NO,
+        MCDP_CD,
+        MDDR_ID,
+        APNT_YMD
+    
+    from
+        APPOINTMENT
+    where
+        date_format(APNT_YMD,'%Y-%m-%d') = '2022-04-13' 
+        and MCDP_CD = 'CS'
+        and APNT_CNCL_YN = 'N'
+)
+
+SELECT
+    c.APNT_NO,
+    p.PT_NAME,
+    p.PT_NO,
+    d.MCDP_CD,
+    d.DR_NAME,
+    c.APNT_YMD
+from 
+    cte as c
+    left join PATIENT as p using(PT_NO)
+    left join DOCTOR as d on c.MDDR_ID = d.DR_ID
+order by
+    c.APNT_YMD asc ;
