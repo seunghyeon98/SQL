@@ -1,0 +1,35 @@
+-- 코드를 입력하세요
+
+# 생산일자(PRODUCE_DATE)가 2022-05월인
+# 식품id
+# 식품이름
+# 총매출
+# 을 조회해라
+# order by 총매출 desc, 식품id asc;
+
+# 1. order 테이블에서, 2022-05인 상품의 총 amount를 계산하기,
+# 2. 그 후, join, 추출
+with cte as (
+    select 
+        PRODUCT_ID,
+        sum(amount) as total_amount
+    from
+        food_order
+    where
+        date_format(PRODUCE_DATE,'%Y-%m') = '2022-05'
+    group by
+        product_id
+)
+
+
+select
+    c.PRODUCT_ID,
+    p.PRODUCT_NAME,
+    c.total_amount*p.price as TOTAL_SALES
+from 
+    cte as c
+    left join food_product as p using(product_id)
+where p.product_name is not null
+order by
+    TOTAL_SALES desc, c.product_id asc;
+
