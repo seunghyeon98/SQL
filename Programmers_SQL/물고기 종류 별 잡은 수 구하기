@@ -1,0 +1,37 @@
+
+-- 코드를 작성해주세요
+# 물고기의 종류 별, 
+# 물고기의 이름(fish_name)
+# 잡은 수(fish_count)를 출력해라
+# order by fish_count desc;
+
+select
+    ci.FISH_COUNT, 
+    ni.FISH_NAME
+from
+    # fish_info 테이블에서, 고기 종류에 따른 갯수를 카운트한다.
+    (
+      select
+          fish_type, count(fish_type) as FISH_COUNT
+      from
+          fish_info
+      group by
+          fish_type
+    ) as ci 
+    left join fish_name_info as ni using(fish_type)
+order by
+    1 desc;
+
+
+# with cte as (
+# select count(fish_type) as fish_count, fish_type
+# from fish_info 
+# group by fish_type
+# )
+
+# select fish_count, fish_name
+# from cte c
+# left join fish_name_info using(fish_type)
+# order by fish_count desc;
+
+    
