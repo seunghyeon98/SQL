@@ -1,0 +1,35 @@
+# Write your MySQL query statement below
+
+-- 2016에서 전체 투자 가치의 총합을 구해라.
+
+-- tiv_2015의 값이 동일하며,
+-- 위치가 중복되지 않은 
+-- tiv_2016의 총합을 구해라.
+
+
+-- with cte as (
+--         select
+--             concat(lat,lon) as loc, tiv_2015, lat, lon
+--         from 
+--            Insurance
+--          group by
+--            loc, tiv_2015
+--          having  count(loc)=1 and count(tiv_2015) >= 1
+-- )
+
+-- select
+--     round(sum(tiv_2016),1) as tiv_2016
+-- from 
+--     cte as c
+--     left join insurance as i 
+--     on c.tiv_2015=i.tiv_2015 and c.lat = i.lat and c.lon = i.lon
+
+select
+    round(sum(tiv_2016),2) as tiv_2016
+from
+    (select *,
+    count(*) over (partition by tiv_2015) as cnt1,
+    count(*) over (partition by lat,lon) as cnt2
+    from insurance
+    ) as tbl
+where cnt1 >=2 and cnt2 = 1;
