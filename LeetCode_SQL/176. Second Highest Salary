@@ -1,0 +1,14 @@
+-- # Write your MySQL query statement below
+
+
+# Lesson
+# row_number로 풀게되면 머리아프다.
+# -> select절의 서브쿼리와 offset를 이용하도록하자.
+
+# select 절에 서브쿼리를 사용하면, 별도의 from절이 필요없다.
+SELECT 
+    (SELECT DISTINCT Salary 
+     FROM Employee 
+     ORDER BY Salary DESC 
+     LIMIT 1 OFFSET 1) AS SecondHighestSalary;
+    # select 절의 서브쿼리에 해당하는 데이터가 없다면, 바깥쪽의 select절은 null을 출력하게 된다.
