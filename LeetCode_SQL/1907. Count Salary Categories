@@ -1,0 +1,36 @@
+# Write your MySQL query statement below
+-- 계산해라.
+-- low salary : salary < 20000 
+-- average salary : 20000 <= salary <= 50000
+-- high salary : salary > 50000
+-- 모든 3개의 카테고리가 테이블에 포함되어있어야한다.
+-- (집계가 되지 않는다면 0을 리턴해라.(ifnull(col,0)))
+
+# Write your MySQL query statement below
+-- Lesson 
+-- - 각 카테고리의 값이 필수로 존재해야한다면, 각 카테고리마다 집계를 각각해야한다.
+-- - 이때, sum(조건식)을 사용하는데, sum함수내에 조건식을 사용하면, 조건을 만족하는 값은 1,아니면 0이 반환되고, 이때 1의 값만 더해지게 된다.
+
+SELECT 
+    'Low Salary' AS category,
+    SUM(income < 20000) AS accounts_count
+FROM 
+    Accounts
+
+UNION 
+
+    SELECT 
+        'Average Salary' AS category,
+        SUM(income BETWEEN 20000 AND 50000 ) AS accounts_count
+    FROM 
+        Accounts
+
+UNION
+
+    SELECT 
+        'High Salary' AS category,
+        SUM(income > 50000) AS accounts_count
+    FROM 
+        Accounts;
+
+

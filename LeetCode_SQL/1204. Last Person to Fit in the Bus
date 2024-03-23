@@ -1,0 +1,25 @@
+# Write your MySQL query statement below
+
+-- Lesson
+--  누적합 구하기 : sum(col) over(order by col) as ~
+--  select절에서 새로 만든 칼럼다루기
+
+-- 1,000kg가 초과되지 않은 마지막 사람을 구해라.
+-- 누적합 구하기.
+-- total_weight가1000kg이하까지 끊기
+-- total weight를 뒤집어서, 위에 한개 뽑기
+select
+    person_name
+from
+(
+SELECT
+    Turn,
+    person_name ,
+    Weight,
+    SUM(Weight) OVER (ORDER BY Turn) AS TotalWeight
+FROM 
+    Queue 
+) as total_tb
+where TotalWeight <= 1000
+order by TotalWeight desc
+limit 1;
