@@ -1,0 +1,39 @@
+-- 코드를 작성해주세요
+# VER1. 서브쿼리 활용
+# select 
+#     sum(sub_q.s_fish_count) as FISH_COUNT    
+# from
+#     (
+# select
+#     count(ni.fish_type) as s_fish_count
+# from
+#     fish_name_info as ni
+#     left join fish_info as i using(fish_type)
+# where 
+#     ni.fish_name in ('BASS','SNAPPER') 
+# group by
+#     ni.fish_type
+#     ) as sub_q
+
+# VER2. 필터링, sum() 수식
+# SELECT SUM(CASE WHEN ni.fish_name IN ('BASS', 'SNAPPER') THEN 1 ELSE 0 END) AS FISH_COUNT
+# FROM fish_name_info AS ni
+# LEFT JOIN fish_info AS i USING(fish_type)
+# WHERE ni.fish_name IN ('BASS', 'SNAPPER');
+
+
+# select
+#     sum(case when ni.fish_name in ('BASS','SNAPPER') then 1 else 0 end )as FISH_COUNT
+# from
+#     FISH_NAME_INFO as ni
+#     left join fish_info as i using(fish_type)
+# where ni.fish_name in ('BASS','SNAPPER')
+
+
+select
+    count(*) as FISH_COUNT
+from
+    fish_name_info as ni
+    left join fish_info as i using(fish_type)
+where
+    ni.fish_name in ('BASS','SNAPPER')
