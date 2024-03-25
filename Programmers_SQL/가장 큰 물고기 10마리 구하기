@@ -1,0 +1,12 @@
+-- 코드를 작성해주세요
+
+# 가장 큰 물고기 10 마리의id와 길이를 출력하는 sql문을 작성해라.
+# order by length desc, id asc;
+
+select
+    id,length
+from
+    fish_info
+order by
+    length desc, id asc
+limit 10;
