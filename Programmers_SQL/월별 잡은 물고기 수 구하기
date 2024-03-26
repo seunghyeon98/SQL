@@ -1,0 +1,17 @@
+# -- 코드를 작성해주세요
+
+# 월별잡은 물고기의 수와, 월을 출력해라.
+
+# order by month asc
+
+# time칼럼에서, month를 파싱한뒤, group by
+
+with cte as (
+select MONTH(TIME) as MONTH
+from fish_info
+)
+select count(*) as FISH_COUNT, MONTH
+from cte
+group by month
+order by 2 asc;
+    
